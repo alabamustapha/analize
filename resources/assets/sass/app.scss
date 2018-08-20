@@ -1,0 +1,36 @@
+
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+.navbar-be-healthy{
+  padding: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.navbar-be-healthy .navbar-brand{
+  margin-right: 42px;
+  height: 80px;
+}
+
+.navbar-be-healthy .navbar-nav .nav-item > a{
+  padding: 0 14px;
+  line-height: 80px;
+  font-size: 14px;
+  color: #000;
+  font-weight: 700;
+  text-transform: uppercase;
+  // -webkit-backface-visibility: hidden;
+}
+
+.navbar-be-healthy .navbar-nav .nav-item > a:hover{
+  border-bottom: 3px solid #54a4e5;
+}
