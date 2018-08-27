@@ -24,7 +24,7 @@ class CreateLabsTable extends Migration
             $table->string('phone')->nullable();
             $table->string('url')->nullable();
             $table->unsignedInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             $table->timestamps();
         });
     }

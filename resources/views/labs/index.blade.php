@@ -95,7 +95,7 @@
                                 {{ method_field('DELETE') }}
                                 @csrf
                             </form>
-                            <button type="button" class="btn btn-secondary btn-sm delete_lab"  data-title="Delete lab" data-submit-text="Delete" data-url="labs/{{$lab->id}}">Delete</button>
+                            <button type="button" class="btn btn-secondary btn-sm delete_lab"  data-title="Delete lab" data-submit-text="Delete" data-url="labs/{{$lab->slug}}">Delete</button>
                         </td>
                         </tr>
                         @endforeach

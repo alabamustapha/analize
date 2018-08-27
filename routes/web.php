@@ -22,6 +22,15 @@ Route::get('/labs', 'HomeController@labs')->name('labs');
 Route::prefix('admin')->middleware('admin')->group(function(){
     Route::get('/dashboard', 'AdminController@index')->name('admin_dashboard');
 
+    Route::get('/users', 'UserController@index')->name('user_index');
+    Route::put('/users/{user}/assign', 'UserController@assignLab')->name('assign_lab');
+    Route::put('/users/{user}/unassign', 'UserController@unassignLab')->name('unassign_lab');
+    Route::put('/users/{user}/approve', 'UserController@approveLab')->name('approve_lab');
+    Route::put('/users/{user}/unapprove', 'UserController@unapproveLab')->name('unapprove_lab');
+    Route::delete('/users/{user}', 'UserController@destroy')->name('delete_user');
+    
+    
+    
     Route::get('/groups', 'GroupController@index')->name('group_index');
     Route::get('/groups/create', 'GroupController@create')->name('create_group');
     Route::post('/groups/create', 'GroupController@store')->name('store_group');

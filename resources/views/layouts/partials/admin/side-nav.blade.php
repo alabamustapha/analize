@@ -25,6 +25,12 @@
             {{ __('Manage Labs') }}
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link {{ isActiveRoute('user_index') ? 'active' : '' }}" href="{{ route('user_index') }}">
+            <span data-feather="file"></span>
+            {{ __('Manage users') }}
+          </a>
+        </li>
         
         {{-- 
         <li class="nav-item">
