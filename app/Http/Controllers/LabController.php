@@ -37,6 +37,10 @@ class LabController extends Controller
         return view('labs.index', compact(['labs']));
     }
 
+    public function createLab(){
+        return view('labs.create_lab');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -219,7 +223,8 @@ class LabController extends Controller
 
     public function packages(Lab $lab){
         $groups   = Group::orderBy('name')->get();
-        $packages = Package::get();
+        $packages = $lab->packages;
+        
         return view('labs.packages', compact('lab', 'groups', 'packages'));
     }
     

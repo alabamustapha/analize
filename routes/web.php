@@ -22,7 +22,6 @@ Route::get('/labs', 'HomeController@labs')->name('labs');
 Route::prefix('admin')->middleware('admin')->group(function(){
     Route::get('/dashboard', 'AdminController@index')->name('admin_dashboard');
 
-
     Route::get('/groups', 'GroupController@index')->name('group_index');
     Route::get('/groups/create', 'GroupController@create')->name('create_group');
     Route::post('/groups/create', 'GroupController@store')->name('store_group');
@@ -44,9 +43,12 @@ Route::prefix('admin')->middleware('admin')->group(function(){
     Route::get('/labs/{lab}', 'LabController@show')->name('show_lab');
     Route::get('/labs/{lab}/tests', 'LabController@tests')->name('show_lab_tests');
 
+    Route::post('/labs/{lab}/tests', 'TestController@store')->name('store_test');
+
     Route::get('/labs/{lab}/link_tests', 'LabController@linkTests')->name('link_lab_tests_to_group');
     Route::get('/labs/{lab}/linked_tests', 'LabController@linkedTests')->name('manage_linked_lab_tests');
     
+    Route::get('/labs/{lab}/tests/{test}/edit', 'TestController@edit')->name('edit_lab_test');
     Route::delete('/labs/{lab}/tests/{test}', 'LabController@deleteTest')->name('delete_lab_test');
     Route::post('/labs/{lab}/scrape', 'LabController@scrape')->name('scrape_lab_tests');
     Route::delete('/labs/{lab}', 'LabController@destroy')->name('delete_lab');
@@ -59,11 +61,6 @@ Route::prefix('admin')->middleware('admin')->group(function(){
     Route::put('/labs/{lab}/tests/{test}', 'TestController@update')->name('update_test_group');
     
     Route::put('/labs/{lab}/groups/{group}', 'TestController@updateGroupTest')->name('update_group_test');
-
-    
-    // Route::get('/labs', 'LabController@index')->name('lab_index');
-    // Route::post('/lab/create', 'LabController@store')->name('store_lab');
-    // Route::get('/labs/{lab}', 'LabController@show')->name('show_lab');
     
     Route::post('/labs/{lab}/location', 'LocationController@store')->name('store_location');
     Route::delete('/locations/{location}', 'LocationController@destroy')->name('delete_location');
@@ -82,12 +79,43 @@ Route::prefix('admin')->middleware('admin')->group(function(){
     Route::put('/labs/{lab}/packages/{package}', 'LabController@updatePackage')->name('update_lab_package');
     Route::get('/labs/{lab}/packages/{package}/edit', 'LabController@editPackage')->name('edit_lab_package');
     Route::post('/labs/{lab}/packages', 'LabController@storePackage')->name('add_lab_package');
-
     
     Route::get('/labs/{lab}/gallery', 'LabController@gallery')->name('manage_lab_gallery');
     Route::post('/labs/{lab}/gallery', 'LabController@addGalleryImage')->name('add_gallery_image');
 
 });
+Route::prefix('user')->middleware(['auth'])->group(function(){
+
+    Route::post('/lab/create', 'LabController@store')->name('store_lab');
+
+    Route::get('/create_lab', 'LabController@createLab')->name('user_create_lab')->middleware('hasNoLab');
+
+    Route::group(['middleware' => ['owner', 'auth']], function () {
+    
+        Route::get('/{lab}', 'LabController@show')->name('user_show_lab');
+        
+        Route::get('/{lab}/tests', 'LabController@tests')->name('user_show_lab_tests');
+        Route::get('/{lab}/link_tests', 'LabController@linkTests')->name('user_link_lab_tests_to_group');
+        Route::get('/{lab}/linked_tests', 'LabController@linkedTests')->name('user_manage_linked_lab_tests');
+        
+        Route::get('/{lab}/edit', 'LabController@edit')->name('user_edit_lab');
+        
+        Route::get('/{lab}/tests/{test}/edit', 'TestController@edit')->name('user_edit_lab_test');
+        Route::get('/{lab}/locations', 'LabController@showLocations')->name('user_show_lab_locations');
+        
+        Route::get('/{lab}/edit_bio', 'LabController@editBio')->name('user_edit_lab_bio');
+        Route::get('/{lab}/teams', 'LabController@teams')->name('user_manage_lab_teams');
+        
+        Route::get('/{lab}/packages', 'LabController@packages')->name('user_manage_lab_packages');
+        Route::get('/{lab}/packages/{package}/edit', 'LabController@editPackage')->name('user_edit_lab_package');
+        Route::get('/{lab}/gallery', 'LabController@gallery')->name('user_manage_lab_gallery');
+        
+        Route::get('/{lab}/get_tests', 'LabController@labTestsJson')->name('user_get_lab_tests');
+    });
+    
+
+});
+
 
 Route::get('/labs/{lab}', 'LabController@page')->name('lab_page');
 

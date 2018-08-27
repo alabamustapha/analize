@@ -31,36 +31,15 @@
     <div class="container-fluid">
       <div class="row">
      
-        @include('layouts.partials.admin.side-nav')
-
+        @if(auth()->user()->isAdmin)  
+          @include('layouts.partials.admin.side-nav')
+        @else
+          @include('layouts.partials.user.side-nav')
+        @endif
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
           
             @yield('content')
-          {{-- <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas> --}}
-
-          {{-- <h2>Section title</h2> --}}
-          {{-- <div class="table-responsive">
-            <table class="table table-striped table-sm">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1,001</td>
-                  <td>Lorem</td>
-                  <td>ipsum</td>
-                  <td>dolor</td>
-                  <td>sit</td>
-                </tr>
-              </tbody>
-            </table>
-          </div> --}}
+          
         </main>
       </div>
     </div>

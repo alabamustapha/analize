@@ -11,30 +11,26 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="labModalLabel">Create new Lab</h5>
+                        <h5 class="modal-title" id="labModalLabel">Create new test</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('store_lab') }}" method="POST" id="lab-form">
+                        <form action="{{ route('store_test', ['lab' => $lab->slug]) }}" method="POST" id="lab-form">
                             @csrf
                             @foreach($errors->all() as $message)
                                 <p>{{ $message }} </p>
                             @endforeach
                             <div class="form-group">
-                                <label for="lab-name" class="col-form-label">Name:</label>
-                                <input type="text" class="form-control" id="lab-name" name="name" value="{{ old('name') }}">
+                                <label for="test-name" class="col-form-label">Name:</label>
+                                <input type="text" class="form-control" id="test-name" name="name" value="{{ old('name') }}">
                             </div>
                             <div class="form-group">
-                                <label for="lab-short-name" class="col-form-label">Short Name:</label>
-                                <input type="text" class="form-control" id="lab-short-name" name="short_name" value="{{ old('short_name') }}">
+                                <label for="price" class="col-form-label">Test:</label>
+                                <input type="number" class="form-control" id="price" name="price" value="{{ old('price') }}">
                             </div>
-                            <div class="form-group">
-                                <label for="lab-url" class="col-form-label">Url:</label>
-                                <input type="text" class="form-control" id="lab-url" name="url" value="{{ old('url') }}">
-                            </div>
-
+                           
                         </form>
                     </div>
                     
@@ -61,7 +57,7 @@
                                         <button type="button" class="btn btn-primary" 
                                         onclick="event.preventDefault();
                                         document.getElementById('scrape_lab_tests').submit();">Scrape tests</button>
-                                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#labModal" data-title="Add new Lab" data-submit-text="Create lab" data-url="category/create" data-method="POST">Add Test</button>
+                                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#labModal" data-title="Add new test" data-submit-text="Create test" data-url="category/create" data-method="POST">Add Test</button>
                                 </div>
                         </div>
                     </div>
@@ -90,8 +86,8 @@
                         <td>{{ $test->name }}</td>
                         <td>{{ $test->price }}</td>
                         <td>
-                            <a class="btn btn-secondary btn-sm" href="{{ route('show_lab', ['lab' => $lab->slug]) }}" target="_blank">View</a>
-                            <a class="btn btn-secondary btn-sm" href="{{ route('edit_lab', ['lab' => $lab->id]) }}" target="_blank">Edit</a>
+                            
+                            <a class="btn btn-secondary btn-sm" href="{{ route(auth()->user()->isAdmin ? 'edit_lab_test' : 'user_edit_lab_test', ['lab' => $lab->slug, 'test' => $test->id]) }}" target="_blank">Edit</a>
 
                             <form class="delete_lab_test" action="{{ route('delete_lab_test', ['lab' => $lab->slug, 'test' => $test->id ]) }}" method="POST" style="display: none;">
                             @csrf    

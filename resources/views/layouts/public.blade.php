@@ -141,17 +141,25 @@
                             </div>
                         </li>
                         
+                        
                         @guest
-                            
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}">
+                                {{ __('Login') }}
+                            </a>
+                        </li>
+
                         @else
-                            {{-- <li class="nav-item">
-                                <a class="nav-link" href="{{ route('category_index') }}">{{ __('Manage Categories') }}</a>
-                            </li> --}}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('group_index') }}">{{ __('Manage Group') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('logout') }}"
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ __('Account') }}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ auth()->user()->dashboard }}">{{ __('Manage') }}</a>
+                              <div class="dropdown-divider"></div>
+                              <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
@@ -159,7 +167,12 @@
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     @csrf
                                 </form>
-                            </li>
+                            
+                              
+                            </div>
+                          </li>
+                        
+                            
                         @endguest
                     </ul>
                 </div>

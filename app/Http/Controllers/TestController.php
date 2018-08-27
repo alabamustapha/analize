@@ -35,9 +35,15 @@ class TestController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Lab $lab)
     {
-        //
+        $test = Test::create([
+            'name' => $request->name,
+            'price' => $request->price,
+            'lab_id' => $lab->id
+        ]);
+
+        return back()->with('message', 'Test added');
     }
 
     /**
@@ -57,9 +63,9 @@ class TestController extends Controller
      * @param  \App\Test  $test
      * @return \Illuminate\Http\Response
      */
-    public function edit(Test $test)
+    public function edit(Lab $lab, Test $test)
     {
-        //
+        return view('labs.edit_test', compact('lab', 'test'));
     }
 
     /**
@@ -71,7 +77,10 @@ class TestController extends Controller
      */
     public function update(Request $request, Lab $lab, Test $test)
     {
-        $test->group_id = $request->group_id;
+        
+        $test->group_id = $request->has('group_id') ? $request->group_id : $test->group_id;
+        $test->name = $request->has('name') ? $request->name : $test->name;
+        $test->price = $request->has('price') ? $request->price : $test->price;
         $test->save();
         return back()->with('status', $test->name . ' linked');
     }

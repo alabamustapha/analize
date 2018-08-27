@@ -52,5 +52,21 @@ class User extends Authenticatable
         
     }
 
+    public function lab(){
+        return $this->hasOne('App\Lab');
+    }
+
+    public function getDashboardAttribute(){
+        $url = 'user/create_lab';
+
+        if($this->isAdmin) {
+          $url =  route('group_index');
+        }elseif($this->lab){
+            $url = route('user_show_lab_tests', ['lab' => $this->lab->slug]);
+        } 
+
+        return $url;
+    }
+
 
 }

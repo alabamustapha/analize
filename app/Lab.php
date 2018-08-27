@@ -9,7 +9,7 @@ class Lab extends Model
 {
     use Sluggable;
     
-    protected $fillable = ['name', 'short_name', 'url', 'slug', 'bio', 'bio_excerpt', 'bio_image'];
+    protected $fillable = ['name', 'short_name', 'url', 'slug', 'bio', 'bio_excerpt', 'bio_image', 'user_id'];
 
     public function locations(){
         return $this->hasMany('App\Location');

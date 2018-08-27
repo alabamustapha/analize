@@ -106,7 +106,7 @@
                             <td>{{ $package->price }}</td>
                             <td>
                                     {{-- <a class="btn btn-secondary btn-sm" href="{{ route('show_lab', ['lab' => $lab->slug]) }}" target="_blank">View</a> --}}
-                                    <a class="btn btn-secondary btn-sm" href="{{ route('edit_lab_package', ['lab' => $lab->slug, 'package' => $package->id]) }}" target="_blank">Edit</a>
+                                    <a class="btn btn-secondary btn-sm" href="{{ route(auth()->user()->isAdmin ? 'edit_lab_package' : 'user_edit_lab_package', ['lab' => $lab->slug, 'package' => $package->id]) }}" target="_blank">Edit</a>
         
                                     <form class="delete_lab_package" action="" method="POST" style="display: none;">
                                         {{ method_field('DELETE') }}

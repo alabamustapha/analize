@@ -19,8 +19,8 @@ class CreateTestsTable extends Migration
             $table->decimal('price',8,2)->default(0);
             $table->unsignedInteger('lab_id');
             $table->unsignedInteger('group_id')->nullable();
-            $table->foreign('lab_id')->references('id')->on('labs');
-            $table->foreign('group_id')->references('id')->on('groups');
+            $table->foreign('lab_id')->references('id')->on('labs')->onDelete('cascade');
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('set null');
             $table->timestamps();
         });
     }

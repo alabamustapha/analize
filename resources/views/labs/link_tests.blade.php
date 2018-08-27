@@ -133,7 +133,7 @@
 
         $.ajax({
             type: "GET",
-            url:  "{{ route('get_lab_tests', ['lab' => $lab->slug]) }}",
+            url:  "{{ route(auth()->user()->isAdmin ? 'get_lab_tests' : 'user_get_lab_tests', ['lab' => $lab->slug]) }}",
             success: function( response ) {
                 data = response;
             },

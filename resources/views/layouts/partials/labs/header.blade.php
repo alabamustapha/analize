@@ -1,3 +1,4 @@
+@if(auth()->user()->isAdmin)
 <div class="row">
 
         <div class="col-md-6">
@@ -27,3 +28,7 @@
         </div>
     
     </div>
+@else
+
+<div class="mt-3"></div>
+@endif    
