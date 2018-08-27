@@ -62,7 +62,12 @@ class UserRepository{
             $this->unassignLab($user->lab);
         }
         
-        return $user->delete();
+        if(!$user->isAdmin) 
+        {
+            return $user->delete();
+        }else{
+            return $user;
+        }
     }
 
 
