@@ -92,6 +92,10 @@ Route::prefix('admin')->middleware('admin')->group(function(){
     
     Route::get('/labs/{lab}/gallery', 'LabController@gallery')->name('manage_lab_gallery');
     Route::post('/labs/{lab}/gallery', 'LabController@addGalleryImage')->name('add_gallery_image');
+    Route::get('/labs/{lab}/images/{image}', 'LabController@editGalleryImage')->name('edit_gallery_image');
+    Route::put('/labs/{lab}/images/{image}', 'LabController@updateGalleryImage')->name('update_gallery_image');
+    Route::delete('/labs/{lab}/images/{image}', 'LabController@deleteGalleryImage')->name('delete_gallery_image');
+    
 
 });
 Route::prefix('user')->middleware(['auth'])->group(function(){

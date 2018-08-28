@@ -6,6 +6,7 @@ use App\Lab;
 use App\Team;
 use App\Test;
 use App\Group;
+use App\Image;
 use App\Package;
 use App\Http\Helper\Crawler;
 use Illuminate\Http\Request;
@@ -272,6 +273,33 @@ class LabController extends Controller
     public function addGalleryImage(Request $request, Lab $lab){
         $image = $this->image->create($request->all(), $lab);
         return back()->with('status', 'created');
+    }
+    
+    public function editGalleryImage(Request $request, Lab $lab, Image $image){   
+        
+        return view('labs.edit_gallery', compact('lab', 'image'));
+    }
+    
+    public function updateGalleryImage(Request $request, Lab $lab, Image $image){
+        
+        $this->image->update($request->all(), $lab, $image);
+
+        return back()->with('status', 'Updated');
+    }
+    public function deleteGalleryImage(Request $request, Lab $lab, Image $image){
+        
+        $img_url =  $image->url;
+
+        $img_url = str_replace('/storage', '', $img_url);
+        
+        $image->delete();
+
+        if(\Storage::disk('public')->exists($img_url)){
+            \Storage::disk('public')->delete($img_url);
+        }
+        
+        
+        return back()->with('status', 'Deleted');
     }
 
     public function deleteTeam(Lab $lab, Team $team){

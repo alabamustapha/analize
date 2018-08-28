@@ -113,8 +113,8 @@
                                 <td>{{ $image->description }}</td>
                                 <td>{{ $image->rank }}</td>
                                 <td>
-                                          <a class="btn btn-secondary btn-sm" href="{{ '#' }}">Edit</a>
-                                        <button type="button" class="btn btn-secondary btn-sm delete_image" data-url="images/{{$image->id}}">Delete</button>
+                                    <a class="btn btn-secondary btn-sm" href="{{ route('edit_gallery_image', ['lab' => $lab->slug, 'image' => $image->id]) }}" target="_blank">Edit</a>
+                                    <button type="button" class="btn btn-secondary btn-sm delete_image" data-url="images/{{$image->id}}">Delete</button>
                                 </td>
                             </tr>
                         @endforeach

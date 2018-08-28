@@ -39,6 +39,36 @@ class ImageRepository{
         
         
     }
+    
+    public function  update($columns, $lab, $image){
+        
+        extract($columns); 
+        
+        
+        $image->title = $title;
+        $image->rank  = $rank;
+        $image->description = $description;
+        $image->lab_id      = $lab_id;
+        
+        $image->save();
+
+        if(isset($gallery_image)){
+            $path = $this->uploadImage($gallery_image, $image->id, $lab);
+
+            if($path){
+                $image->url = $path;
+                $image->save();
+            }
+        }
+        
+
+        
+
+
+        return $image;
+        
+        
+    }
 
     private function uploadImage($image, $image_id, $lab){
         
