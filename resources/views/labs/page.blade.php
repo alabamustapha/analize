@@ -60,7 +60,7 @@
         <div class="row">
             @foreach($teams as $team)
             <div class="col-md-3 text-center">
-                <img class="rounded-circle" src="{{ asset($team->avatar) }}" width="200px">
+                <img class="rounded-circle" src="{{ asset($team->avatar) }}" width="200" height="200">
                 <div class="mb-4">
                     <h3>{{ $team->name }}</h3>
                     <span>{{ $team->title }}</span>

@@ -52,11 +52,13 @@ class Crawler
             if($item['price'] !== 0){
                 
                 $test = Test::firstOrNew([
-                    'name' => $item['name'],
+                    'scraped_name' => $item['name'],
                     'lab_id' => $lab_id,
                 ]);
     
                 // $synlab->code = trim($item[0]);
+                $test->name = $item['name'];
+                $test->scraped = 1;
                 $test->price = (float) $item['price'];
     
                 $test->save();  
@@ -82,11 +84,13 @@ class Crawler
                 if($item['price'] !== 0){
                     
                     $test = Test::firstOrNew([
-                        'name' => $item['name'],
+                        'scraped_name' => $item['name'],
                         'lab_id' => $lab_id,
                     ]);
         
                     // $synlab->code = trim($item[0]);
+                    $test->name = $item['name'];
+                    $test->scraped = 1;
                     $test->price = (float) $item['price'];
         
                     $test->save();  
@@ -121,11 +125,13 @@ class Crawler
                     if($item['price'] !== 0){
                         
                         $test = Test::firstOrNew([
-                            'name' => $item['name'],
+                            'scraped_name' => $item['name'],
                             'lab_id' => $lab_id,
                         ]);
             
                         // $synlab->code = trim($item[0]);
+                        $test->name = $item['name'];
+                        $test->scraped = 1;
                         $test->price = (float) $item['price'];
             
                         $test->save();  
@@ -152,11 +158,13 @@ class Crawler
                         if($item['price'] !== 0){
                             
                             $test = Test::firstOrNew([
-                                'name' => $item['name'],
+                                'scraped_name' => $item['name'],
                                 'lab_id' => $lab_id,
                             ]);
                 
                             // $synlab->code = trim($item[0]);
+                            $test->name = $item['name'];
+                            $test->scraped = 1;
                             $test->price = (float) $item['price'];
                 
                             $test->save();  
@@ -219,11 +227,13 @@ class Crawler
                 if($item[2] > 0){
                     
                     $test = Test::firstOrNew([
-                        'name' => trim($item[1]),
+                        'scraped_name' => trim($item[1]),
                         'lab_id' => $lab_id,
                     ]);
         
                     // $synlab->code = trim($item[0]);
+                    $test->name = trim($item[1]);
+                    $test->scraped = 1;
                     $test->price = (float) trim($item[2]);
         
                     $test->save();  
@@ -267,10 +277,12 @@ class Crawler
             if($item[1] > 0 && !str_is("Nume", $item[0])){
 
                 $test = Test::firstOrNew([
-                    'name' => trim($item[0]),
+                    'scraped_name' => trim($item[0]),
                     'lab_id' => $lab_id,
                 ]);
     
+                $test->name = trim($item[0]);
+                $test->scraped = 1;
                 $test->price = (float) trim($item[1]);
     
                 $test->save();  

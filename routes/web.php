@@ -82,6 +82,7 @@ Route::prefix('admin')->middleware('admin')->group(function(){
 
     Route::get('/labs/{lab}/teams', 'LabController@teams')->name('manage_lab_teams');
     Route::post('/labs/{lab}/teams', 'LabController@addTeam')->name('add_team_member');
+    Route::delete('/labs/{lab}/teams/{team}', 'LabController@deleteTeam')->name('delete_team_member');
     
     Route::get('/labs/{lab}/packages', 'LabController@packages')->name('manage_lab_packages');
     Route::delete('/labs/{lab}/packages/{package}', 'LabController@deletePackage')->name('delete_lab_package');

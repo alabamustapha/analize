@@ -90,6 +90,12 @@
                 @foreach($errors->all() as $message)
                     <p>{{ $message }} </p>
                 @endforeach
+
+                <form class="delete_image" action="" method="POST" style="display: none;">
+                    {{ method_field('DELETE') }}
+                    @csrf
+                    }
+                </form>
                 
                 <table class="table ">
                     <thead>
@@ -107,7 +113,8 @@
                                 <td>{{ $image->description }}</td>
                                 <td>{{ $image->rank }}</td>
                                 <td>
-                                    edit/delete
+                                          <a class="btn btn-secondary btn-sm" href="{{ '#' }}">Edit</a>
+                                        <button type="button" class="btn btn-secondary btn-sm delete_image" data-url="images/{{$image->id}}">Delete</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -126,6 +133,18 @@
 
 @section('scripts')
 
+<script>
+    
+        $('button.delete_image').click(function(e){
+                    
+                    e.preventDefault();
+                
+                    $("form.delete_image").attr('action', $(this).data('url')).submit();
+                    
+                    
+                });
+                
+        </script>
 
 
 @endsection

@@ -97,11 +97,13 @@ class CrawlerController extends Controller
             if($item['price'] !== 0){
                 
                 $synevo = Synevo::firstOrNew([
-                    'name' => $item['name'],
+                    'scraped_name' => $item['name'],
                 ]);
-    
+                
+                $synevo->name = $item['name'];
                 $synevo->code = $item['code'];
                 $synevo->price = $item['price'];
+                $synevo->s_scraped = 1;
     
                 $synevo->save();
     
@@ -152,11 +154,13 @@ class CrawlerController extends Controller
             if($item[2] > 0){
                 
                 $synlab = Synlab::firstOrNew([
-                    'name' => trim($item[1]),
+                    'scraped_name' => trim($item[1]),
                 ]);
     
+                $synlab->name = trim($item[1]);
                 $synlab->code = trim($item[0]);
                 $synlab->price = (float) trim($item[2]);
+                $synlab->is_scraped = 1;
     
                 $synlab->save();
     
@@ -193,11 +197,13 @@ class CrawlerController extends Controller
             if($item[1] > 0 && !str_is("Nume", $item[0])){
 
                 $reginamaria = Reginamaria::firstOrNew([
-                    'name' => trim($item[0]),
+                    'scraped_name' => trim($item[0]),
                 ]);
     
                 
+                $reginamaria->name = trim($item[0]);
                 $reginamaria->price = (float) trim($item[1]);
+                $reginamaria->is_scraped = 1;
     
                 $reginamaria->save();
     
@@ -256,12 +262,13 @@ class CrawlerController extends Controller
             if($item[1] > 0 ){
 
                 $medlife = Medlife::firstOrNew([
-                    'name' => trim($item[0]),
+                    'scraped_name' => trim($item[0]),
                 ]);
     
                 
+                $medlife->name = trim($item[0]);
                 $medlife->price = (float) trim($item[1]);
-    
+                $medlife->is_scraped = 1;    
                 $medlife->save();
     
             }

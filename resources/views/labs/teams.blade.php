@@ -30,7 +30,11 @@
                 @foreach($errors->all() as $message)
                     <p>{{ $message }} </p>
                 @endforeach
-                
+                <form class="delete_team" action="" method="POST" style="display: none;">
+                    {{ method_field('DELETE') }}
+                    @csrf
+                    }
+                </form>
                 <table class="table ">
                     <thead>
                         <th>Name</th>
@@ -44,9 +48,11 @@
                             <tr>
                                 <td>{{ $team->name }}</td>
                                 <td>{{ $team->title }}</td>
-                                <td>{{ $team->avatar }}</td>
+                                <td><img src="{{ $team->avatar }}" width="50"></td>
                                 <td>{{ $team->rank }}</td>
-                                <td>delete</td>
+                                <td>
+                                        <button type="button" class="btn btn-secondary btn-sm delete_team" data-submit-text="Delete" data-url="teams/{{$team->id}}">Delete</button>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -126,7 +132,17 @@
 
 
 @section('scripts')
-
-
-
+<script>
+    
+$('button.delete_team').click(function(e){
+            
+            e.preventDefault();
+        
+            alert("deleting..");
+            $("form.delete_team").attr('action', $(this).data('url')).submit();
+            
+            
+        });
+        
+</script>
 @endsection

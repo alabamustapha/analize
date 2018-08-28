@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Lab;
+use App\Team;
 use App\Test;
 use App\Group;
 use App\Package;
@@ -271,6 +272,20 @@ class LabController extends Controller
     public function addGalleryImage(Request $request, Lab $lab){
         $image = $this->image->create($request->all(), $lab);
         return back()->with('status', 'created');
+    }
+
+    public function deleteTeam(Lab $lab, Team $team){
+        $img_url =  $team->avatar;
+
+        $img_url = str_replace('/storage', '', $img_url);
+        
+        $team->delete();
+
+        if(\Storage::disk('public')->exists($img_url)){
+            \Storage::disk('public')->delete($img_url);
+        }
+        
+        return back()->with('message', 'Deleted');
     }
 
     
