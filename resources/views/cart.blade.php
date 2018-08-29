@@ -27,7 +27,7 @@
                     <div class="form-row">
                         <div class="col-md-9">
                             <label class="sr-only" for="locationAddressInput">Add Location</label>
-                            <input type="text" class="form-control mb-2" id="locationAddressInput" placeholder="add location" name="address" onFocus="geolocate()">
+                            <input type="text" class="form-control mb-2" id="locationAddressInput" placeholder="add location" name="address">
                         </div>
                             
                         <div class="col-md-3">
@@ -35,22 +35,13 @@
                         </div>
                     </div>    
 
-                    <table class="table table-hover">
-                        <thead>
-                            <th>S/N</th>
-                            <th>Address</th>
-                            <th></th>
-                        </thead>
+                    <table class="table table-hover table-striped" id="rankedLocation">
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Address</td>
-                                <td><button class="btn btn-sm">view on map</button></td>
-                            </tr>
+                            
                         </tbody>
                     </table>
                 
-                    <div id="map"></div>
+                    {{-- <div id="map"></div> --}}
             </div>
             
             <div class="modal-footer">
@@ -109,7 +100,7 @@
                                                                 <input class="locations-{{$lab->id}}" type="hidden" value="{{ $location->address }}">       
                                                             @endforeach
                                                             
-                                                            <button class="btn btn-primary btn-block nearest-location" data-lab-id="{{$lab->id}}">{{ $lab->locations->count() ? __('general.Get nearest location') : __('general.No location') }}</button>    
+                                                            <button class="btn btn-primary btn-block nearest-location" data-slug="{{$lab->slug}}" data-city="{{ $city }}">{{ $lab->locations->count() ? __('general.Get nearest location') : __('general.No location') }}</button>    
                                                     @endif
                                             @endif
                                         </div>
@@ -179,9 +170,86 @@
 
 
 @section('scripts')
-<script src="https://cdn.mapfit.com/v2-4/assets/js/mapfit.js"></script>
+{{-- <script src="https://cdn.mapfit.com/v2-4/assets/js/mapfit.js"></script> --}}
+<script>
+        function initAutocomplete() {
+    
+        // Create the search box and link it to the UI element.
+        var input = document.getElementById('locationAddressInput');
+        var searchBox = new google.maps.places.SearchBox(input);
 
-<script> 
+        
+        // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
+        searchBox.addListener('places_changed', function() {
+    
+            var places = searchBox.getPlaces();
+     
+                if (places.length == 0) {
+                    return;
+                }
+                console.log(place);
+                
+            });
+        }
+    </script>
+<script>
+
+    $(document).ready(function(){
+
+        let city = '';
+        let lab_slug = '';
+
+        $('.nearest-location').click(function(){
+            $('#locationModal').modal('show');
+
+            city = $(this).data('city');    
+            lab_slug = $(this).data('slug');    
+        });
+
+        
+        $("#btnClosestLocation").click(function(e){
+
+            let userLocation = $('#locationAddressInput').val();
+            $("table#rankedLocation tbody").empty();
+            
+
+            if(userLocation != ''){
+                $.ajax({
+                    type: "POST",
+                    url:  "{{ route('closest_location') }}",
+                    data:  {city: city, lab_slug: lab_slug, address: userLocation},
+                    success: function( response ) {
+                        $("table#rankedLocation tbody").empty();
+                            response.forEach(location => {
+                                console.log(location)
+                                $("table#rankedLocation tbody").append(
+                                    `<tr>
+                                        <td>` + location.location + `(` + location.distance_text + `)` + `<td>
+                                        <td><a href='https://maps.google.com/maps?q=` + encodeURI(location.location) + `'>view</a></td>
+                                    </tr>`
+                                )
+                            });
+                            // console.log(response);
+
+                    },
+                    error: function(xhr,status,error){
+                        console.log(status)
+                        console.log(error)
+                    }
+                    
+                });
+            }
+            
+
+        });
+    });
+
+</script>
+
+
+<!-- mapfit code implementation -->
+{{-- <script> 
 
    $(document).ready(function(){
 
@@ -193,7 +261,7 @@
             
             let key = "591dccc4e499ca0001a4c6a440ee9820872d4a749cbebc5ff8879f9b";
             
-            $('#locationModal').modal('show')
+            
         
             let geo = new mapfit.Geocoder(key, "https://api.mapfit.com/v2");
 
@@ -233,8 +301,6 @@
         
             });
    });
-
-   
-</script>
+</script> --}}
 
 @endsection

@@ -316,5 +316,33 @@ class LabController extends Controller
         return back()->with('message', 'Deleted');
     }
 
+
+
+    public function closestLocation(Request $request){
+        $city = $request->city;
+        $lab = Lab::with(['locations' => function($query) use ($city){
+            $query->where('city', $city);
+        }])->where('slug', $request->lab_slug)->first();
+
+        $address = $request->address;
+
+        $locations = $lab->locations;
+
+        $distances = [];
+
+       foreach($locations->chunk(25) as $chunk){
+           
+            if(count($distances) == 0){
+                $distances = get_distances($address, $chunk->pluck('address')->toArray());
+           }else{
+               $distances = array_merge($distances, get_distances($address, $chunk->pluck('address')->toArray()));
+           }
+            
+       }
+
+        return response()->json($distances); 
+        // return response()->json($lab->locations->count()); 
+    }
+
     
 }

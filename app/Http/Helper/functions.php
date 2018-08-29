@@ -252,6 +252,13 @@ function get_distances($from, $destinations){
 }
 
 
+
+function closestAddress($distances){
+    
+        return is_array($distances) ? array_first($ranked_distances) : null;
+}
+
+
 function linkToMap($address){
     return "https://maps.google.com/maps?q=" . urlencode($address);
 }

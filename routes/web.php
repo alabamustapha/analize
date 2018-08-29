@@ -17,6 +17,8 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/labs', 'HomeController@labs')->name('labs');
 
+Route::post('get/closest_location', 'LabController@closestLocation')->name('closest_location');
+
 
 
 Route::prefix('admin')->middleware('admin')->group(function(){
